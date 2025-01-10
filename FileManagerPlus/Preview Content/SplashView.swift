@@ -17,17 +17,14 @@ struct SplashView: View {
     @State private var transitionToHome = false
     @State private var gradientStart: UnitPoint = .topLeading
     @State private var gradientEnd: UnitPoint = .bottomTrailing
+    @State private var showFileIcons = true
 
     var body: some View {
         if transitionToHome {
-            // Replace this with your actual home screen view
-            Text("Home Screen")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .transition(.move(edge: .trailing))
+            HomeView()
+                .transition(.scale)
         } else {
             ZStack {
-                // Soft Background Gradient
                 LinearGradient(gradient: Gradient(colors: [.blue, .purple]),
                                startPoint: gradientStart,
                                endPoint: gradientEnd)
@@ -50,30 +47,47 @@ struct SplashView: View {
                             .animation(.easeInOut(duration: 0.5), value: folderRotation)
                             .scaleEffect(folderScale)
                             .animation(.spring(response: 0.8, dampingFraction: 0.5), value: folderScale)
+//                            .padding(.leading, 35)
                         
-                        // Animated File Icons
-                        ForEach(0..<3) { index in
-                            Image(systemName: "doc.fill")
-                                .resizable()
-                                .frame(width: 40, height: 50)
-                                .foregroundColor(.white)
-                                .offset(fileOffsets[index])
-                                .opacity(0.8)
-                                .animation(
-                                    .easeInOut(duration: 1.0).delay(Double(index) * 0.2),
-                                    value: fileOffsets[index]
-                                )
+                        if showFileIcons {
+                            let iconNames = ["music.note", "video.fill", "doc.fill"]
+                            ForEach(0..<iconNames.count, id: \.self) { index in
+                                Image(systemName: iconNames[index])
+                                    .resizable()
+                                    .frame(width: 40, height: 50)
+                                    .foregroundColor(.clear)
+                                    .overlay(
+                                        LinearGradient(
+                                            gradient: Gradient(colors: [.cyan, .purple, .pink]),
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                        .mask(
+                                            Image(systemName: iconNames[index])
+                                                .resizable()
+                                                .frame(width: 40, height: 50)
+                                        )
+                                    )
+                                    .offset(fileOffsets[index])
+                                    .opacity(0.9) // Slightly increase visibility
+                                    .animation(
+                                        .easeInOut(duration: 1.0).delay(Double(index) * 0.2),
+                                        value: fileOffsets[index]
+                                    )
+                            }
                         }
                     }
                     
                     // App Name with Smooth Fade-In
                     if showAppName {
-                        Text("FileManager Pro")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .transition(.opacity)
-                            .animation(.easeIn(duration: 0.5), value: showAppName)
+                        HStack {
+                            Text("FileManager")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .foregroundColor(.black)
+                                .transition(.opacity)
+                                .animation(.easeIn(duration: 0.5), value: showAppName)
+                        }
                     }
                 }
             }
@@ -96,6 +110,13 @@ struct SplashView: View {
                     }
                 }
                 
+                // Hide file icons after 2.5 seconds
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                    withAnimation {
+                        showFileIcons = false
+                    }
+                }
+                
                 // Transition to home screen after 3 seconds
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
                     withAnimation(.easeInOut(duration: 0.8)) {
@@ -106,6 +127,7 @@ struct SplashView: View {
         }
     }
 }
+
 
 #Preview {
     SplashView()

@@ -11,7 +11,8 @@ import SwiftUI
 struct FileManagerPlusApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SplashView()
+            
         }
     }
 }
