@@ -18,11 +18,20 @@ struct SplashView: View {
     @State private var gradientStart: UnitPoint = .topLeading
     @State private var gradientEnd: UnitPoint = .bottomTrailing
     @State private var showFileIcons = true
+    
+    let persistenceController = PersistenceController.shared
+    @StateObject private var copyPasteManager = CopyPasteManager()
+
 
     var body: some View {
         if transitionToHome {
             HomeView()
-                .transition(.scale)
+//            PhotoListView()
+//            PhotoPickerView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environmentObject(copyPasteManager)
+
+            
         } else {
             ZStack {
                 LinearGradient(gradient: Gradient(colors: [.blue, .purple]),

@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		189D34472D3237E600355CD1 /* FolderManagement.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 189D34452D3237E600355CD1 /* FolderManagement.xcdatamodeld */; };
+		183F70BE2D3510F200C30869 /* FileManagerModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 183F70BC2D3510F200C30869 /* FileManagerModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		189D34462D3237E600355CD1 /* FolderManagement.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FolderManagement.xcdatamodel; sourceTree = "<group>"; };
+		183F70BD2D3510F200C30869 /* FileManagerModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FileManagerModel.xcdatamodel; sourceTree = "<group>"; };
 		18B19E802D303C3700623A76 /* FileManagerPlus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FileManagerPlus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -50,7 +50,7 @@
 		18B19E772D303C3700623A76 = {
 			isa = PBXGroup;
 			children = (
-				189D34452D3237E600355CD1 /* FolderManagement.xcdatamodeld */,
+				183F70BC2D3510F200C30869 /* FileManagerModel.xcdatamodeld */,
 				18B19E822D303C3700623A76 /* FileManagerPlus */,
 				18B19E812D303C3700623A76 /* Products */,
 			);
@@ -138,7 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				189D34472D3237E600355CD1 /* FolderManagement.xcdatamodeld in Sources */,
+				183F70BE2D3510F200C30869 /* FileManagerModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,7 +283,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -316,7 +316,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -354,13 +354,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		189D34452D3237E600355CD1 /* FolderManagement.xcdatamodeld */ = {
+		183F70BC2D3510F200C30869 /* FileManagerModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				189D34462D3237E600355CD1 /* FolderManagement.xcdatamodel */,
+				183F70BD2D3510F200C30869 /* FileManagerModel.xcdatamodel */,
 			);
-			currentVersion = 189D34462D3237E600355CD1 /* FolderManagement.xcdatamodel */;
-			path = FolderManagement.xcdatamodeld;
+			currentVersion = 183F70BD2D3510F200C30869 /* FileManagerModel.xcdatamodel */;
+			path = FileManagerModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
