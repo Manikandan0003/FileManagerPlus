@@ -11,6 +11,7 @@ import PhotosUI
 import CoreData
 
 struct PhotoListView: View {
+    @Environment(\.presentationMode) var presentationMode
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Folder.name, ascending: true)],
@@ -36,7 +37,7 @@ struct PhotoListView: View {
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 VStack {
                     HStack {
@@ -58,23 +59,36 @@ struct PhotoListView: View {
                                 updateFetchRequest()
                             }
                         } label: {
+                            let gradient = LinearGradient(
+                                colors: [.blue, .purple],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                            
                             Label("Sort: \(sortOption.rawValue)", systemImage: "arrow.up.arrow.down.circle")
                                 .font(.headline)
                                 .padding()
-                                .foregroundColor(.blue)
-                                .background(Color(.secondarySystemBackground))
-                                .cornerRadius(8)
+                                .foregroundStyle(gradient)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .foregroundStyle(gradient.opacity(0.1))
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color(UIColor.systemGray4), lineWidth: 1)
+                                )
+                                .cornerRadius(10)
                         }
                         Spacer()
                     }
+
+                    
                     .padding()
-                    // Grid of photos
                     ScrollView {
                         LazyVGrid(columns: columns, spacing: 16) {
                             ForEach(photos, id: \.self) { photo in
                                 if let imageData = photo.imageData, let uiImage = UIImage(data: imageData) {
                                     VStack {
-                                        // Image
                                         Image(uiImage: uiImage)
                                             .resizable()
                                             .scaledToFill()
@@ -88,7 +102,6 @@ struct PhotoListView: View {
                                                 }
                                             }
                                         
-                                        // Photo name
                                         Text(photo.name ?? "Unnamed Photo")
                                             .font(.caption)
                                             .foregroundColor(.primary)
@@ -102,7 +115,6 @@ struct PhotoListView: View {
                                             Label("Delete", systemImage: "trash")
                                         }
                                         
-                                        // Add Rename Option to Context Menu
                                         Button {
                                             photoToRename = photo
                                             newName = photo.name ?? "Unnamed Photo"
@@ -117,15 +129,34 @@ struct PhotoListView: View {
                         .padding()
                     }
                     
-                    // Embedded PhotosPicker
                     PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()) {
                         HStack {
                             Image(systemName: "photo.on.rectangle")
                             Text("Add Photo")
                         }
                         .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
+                        .foregroundStyle(
+                            LinearGradient(
+                                colors: [.blue, .purple],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .background(
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundStyle(
+                                    LinearGradient(
+                                        colors: [.blue, .purple],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                    .opacity(0.1)
+                                )
+                       )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color(UIColor.systemGray4), lineWidth: 1)
+                        )                           .foregroundColor(.white)
                         .cornerRadius(8)
                     }
                     .onChange(of: selectedItem) { newItem in
@@ -139,7 +170,6 @@ struct PhotoListView: View {
                     }
                 }
                 
-                // Full-screen photo preview
                 if isPreviewVisible, let selectedPhoto {
                     Color.black.opacity(0.8)
                         .ignoresSafeArea()
@@ -158,13 +188,49 @@ struct PhotoListView: View {
                         }
                 }
                 
-                // Rename Sheet
                 if isRenameSheetVisible {
                     RenameSheet(photo: photoToRename, newName: $newName, isVisible: $isRenameSheetVisible)
                 }
+                
             }
-            .navigationTitle("Saved Photos")
         }
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("Back")
+                    }
+                    .padding(8)
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [.blue, .purple],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .foregroundStyle(
+                                LinearGradient(
+                                    colors: [.blue, .purple],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                                .opacity(0.1)
+                            )
+                   )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color(UIColor.systemGray4), lineWidth: 1)
+                    )
+                }
+            }
+        }
+        .navigationTitle("Photos")
     }
     
     private func updateFetchRequest() {
@@ -184,14 +250,12 @@ struct PhotoListView: View {
     }
 
     private func savePhotoData(data: Data) {
-        // Generate image name
         let imageName = generateImageName()
         
         let newPhoto = Folder(context: viewContext)
         newPhoto.name = imageName
         newPhoto.imageData = data
-        newPhoto.createdDate = Date() // Set creation date with time
-
+        newPhoto.createdDate = Date()
         
         do {
             try viewContext.save()

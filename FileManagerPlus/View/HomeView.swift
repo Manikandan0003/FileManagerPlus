@@ -23,8 +23,7 @@ struct HomeView: View {
                             endPoint: .bottomTrailing
                         )
                     )
-                    .foregroundColor(.primary) // Dynamic color for light/dark mode
-
+                    .foregroundColor(.primary)
             HStack{
                 Image(.search)
                     .resizable()
@@ -48,8 +47,8 @@ struct HomeView: View {
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     ))
-            VStack(spacing : 0){
-                HStack(spacing: 45){
+            VStack(spacing : 20){
+                HStack(spacing: 40){
                     NavigationLink(destination: PhotoListView())
                     {
                         VStack{
@@ -63,7 +62,7 @@ struct HomeView: View {
                                         endPoint: .bottomTrailing
                                     )
                                 )
-                            Text("Photo")
+                            Text("Photos")
                                 .frame(width: 100, height: 35, alignment: .center)
                                 .foregroundStyle(
                                     LinearGradient(
@@ -103,10 +102,6 @@ struct HomeView: View {
                         }
                         
                     }
-                
-                    
-                    
-                    
                     NavigationLink(destination: FolderView(category: "Downloads").environmentObject(copyPasteManager))
                     {
                         VStack{
@@ -151,7 +146,7 @@ struct HomeView: View {
                             )
                         Spacer()
                         Image(systemName: "chevron.right")
-                            .foregroundColor(.secondary) // Subtle icon color
+                            .foregroundColor(.secondary)
                     }
                     .padding()
                     .background(
@@ -162,12 +157,12 @@ struct HomeView: View {
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 )
-                                .opacity(0.1) // Adjust the opacity value (0.0 to 1.0)
+                                .opacity(0.1)
                             )
                    )
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color(UIColor.systemGray4), lineWidth: 1) // Border for emphasis
+                            .stroke(Color(UIColor.systemGray4), lineWidth: 1) 
                     )
                 }
 

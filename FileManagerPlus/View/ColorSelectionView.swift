@@ -13,32 +13,31 @@ struct ColorSelectionView: View {
 
     let colorOptions = ["red", "green", "blue", "yellow", "black", "gradient"]
 
-    @Environment(\.dismiss) var dismiss // Used to dismiss the view
+    @Environment(\.dismiss) var dismiss
 
     var body: some View {
         NavigationView {
             List(colorOptions, id: \.self) { color in
                 Button(action: {
-                    selectedColor = color // Update selected color binding
-                    onColorSelected(color) // Trigger the callback
-                    dismiss() // Dismiss the view
+                    selectedColor = color
+                    onColorSelected(color)
+                    dismiss()
                 }) {
                     Text(color.capitalized)
-                        .foregroundStyle(styleFromString(color)) // Apply the color style
+                        .foregroundStyle(styleFromString(color))
                 }
             }
             .navigationTitle("Select a Color")
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
-                        dismiss() // Dismiss the color selection view
+                        dismiss()
                     }
                 }
             }
         }
     }
 
-    // Function to handle both single colors and gradients
     private func styleFromString(_ colorString: String) -> AnyShapeStyle {
         switch colorString {
         case "red":
@@ -51,7 +50,7 @@ struct ColorSelectionView: View {
             return AnyShapeStyle(Color.yellow)
         case "black":
             return AnyShapeStyle(Color.black)
-        case "gradient": // New gradient option
+        case "gradient": 
             return AnyShapeStyle(
                 LinearGradient(
                     colors: [.blue, .purple],
@@ -60,7 +59,8 @@ struct ColorSelectionView: View {
                 )
             )
         default:
-            return AnyShapeStyle(Color.blue) // Default single color
+            return AnyShapeStyle(Color.blue)
         }
     }
 }
+

@@ -26,8 +26,6 @@ struct SplashView: View {
     var body: some View {
         if transitionToHome {
             HomeView()
-//            PhotoListView()
-//            PhotoPickerView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environmentObject(copyPasteManager)
 
@@ -46,7 +44,6 @@ struct SplashView: View {
                     }
                 
                 VStack(spacing: 20) {
-                    // Folder Icon with Light Rotation
                     ZStack {
                         Image(systemName: "folder.fill")
                             .resizable()
@@ -56,7 +53,6 @@ struct SplashView: View {
                             .animation(.easeInOut(duration: 0.5), value: folderRotation)
                             .scaleEffect(folderScale)
                             .animation(.spring(response: 0.8, dampingFraction: 0.5), value: folderScale)
-//                            .padding(.leading, 35)
                         
                         if showFileIcons {
                             let iconNames = ["music.note", "video.fill", "doc.fill"]
@@ -87,7 +83,6 @@ struct SplashView: View {
                         }
                     }
                     
-                    // App Name with Smooth Fade-In
                     if showAppName {
                         HStack {
                             Text("FileManager")
@@ -101,13 +96,11 @@ struct SplashView: View {
                 }
             }
             .onAppear {
-                // Animate files towards the folder
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     fileOffsets = [CGSize.zero, CGSize.zero, CGSize.zero]
                     folderRotation = -5
                 }
                 
-                // Folder bounce
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     folderScale = 1.05
                 }
